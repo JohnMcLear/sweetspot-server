@@ -1,0 +1,16 @@
+{
+  "name": "sweetspot",
+  "version": "1.2.3",
+  "description": "s",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnmclear/sweetspot.git"
+  },
+  "license": "Apache 2",
+  "dependencies": {
+    "cors": "*",
+    "express": "*",
+    "body-parser": "*",
+    "ueberDB": "*"
+  }
+}
