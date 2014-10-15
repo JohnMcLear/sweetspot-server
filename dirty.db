@@ -378,7 +378,7 @@
 {"key":"03yIR88DvU:HUAWEI P2-6011","val":{"x":38,"y":45}}
 {"key":"apTW0EYg7g:Nexus 5","val":{"x":7,"y":386}}
 {"key":"glShX1kxle:HUAWEI P2-6011","val":{"x":38,"y":43}}
-{"key":"jGZfqGptIV:test","val":{"x":10,"y":10}}
+{"key":"jGZfqGptIV:test","val":{"x":10,"y":10, "maxX":500, "maxY":300}}
 {"key":"ciWpueOMx8:HUAWEI P2-6011","val":{"x":73,"y":64}}
 {"key":"tYye1elTdJ:browser","val":{"x":256,"y":69}}
 {"key":"tNOWtJ4jzK:thl T100S","val":{"x":208,"y":73}}

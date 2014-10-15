@@ -227,7 +227,7 @@ app.post('/api/v2/sweetspot', function(req, res){
     return false;
   }
 
-  console.log("saving data for", model, x, y, maxx, maxy);
+  console.log("saving data for", model, x, y, maxX, maxY);
 
   var guid = (function() {
     function s4() {
@@ -240,7 +240,7 @@ app.post('/api/v2/sweetspot', function(req, res){
 
   var key = guid()+":"+model;
   console.log("Key", key);
-  udb.set(key, {"x":x,"y":y,"maxX"+maxX,"maxY"+maxY});
+  udb.set(key, {"x":x,"y":y,"maxX":+maxX,"maxY":+maxY});
 });
 
 udb.init(function (err){
