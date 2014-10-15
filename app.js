@@ -46,6 +46,31 @@ app.get('/api/v2/device/search/*', function(req, res){
   })
 });
 
+app.get('/api/v1/sweetspot', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  if(!req.query.model){
+    res.json({msg:"Error no model set"});
+    return false;
+  }
+  var model = req.query.model;
+  console.log("Grabbing ", model);
+  udb.findKeys("*:"+model,null, function(e,data){
+    var results = "[";
+    data.forEach(function(k,er){
+      udb.get(k, function(e, row){
+        // This is fucking ugly.
+        var item = er+1;
+        var trail = "";
+        if(item !== data.length) trail = ",";
+        results += JSON.stringify(row) + trail;
+      });
+    });
+    results += "]";
+    console.log(results);
+    res.json(results);
+  })  
+});
+
 app.get('/api/v2/sweetspot', function(req, res){
   res.setHeader('Content-Type', 'application/json');
   if(!req.query.model){
