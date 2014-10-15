@@ -22,7 +22,7 @@ app.get('/api/v1/device/list', function(req, res){
   })
 });
 
-app.get('/api/v1/device/search/*', function(req, res){
+app.get('/api/v2/device/search/*', function(req, res){
   console.log(req.url);
   var query = req.url.split("/");
   var model = query[query.length-1];
@@ -46,8 +46,7 @@ app.get('/api/v1/device/search/*', function(req, res){
   })
 });
 
-
-app.get('/api/v1/sweetspot', function(req, res){
+app.get('/api/v2/sweetspot', function(req, res){
   res.setHeader('Content-Type', 'application/json');
   if(!req.query.model){
     res.json({msg:"Error no model set"});
