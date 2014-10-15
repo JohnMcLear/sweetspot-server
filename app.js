@@ -114,6 +114,135 @@ app.post('/api/v1/sweetspot', function(req, res){
   udb.set(key, {"x":x,"y":y});
 });
 
+app.post('/api/v1/sweetspot', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  if(!req.query.model || !req.query.x || !req.query.y ){
+    console.log("no data");
+    res.json({msg:"Error no model, x or y set"});
+    return false;
+  }
+  var model = req.query.model;
+  var x = req.query.x;
+  var y = req.query.y;
+
+  // Check X and Y are integers
+  var intRegex = /^\d+$/;
+  if(intRegex.test(x) && intRegex.test(y)) {
+    
+  }else{
+    res.json({msg:"Error x or y isn't an integer"});
+    return false;
+  }
+  // Check model is < 100 characters in length
+  if(model.length >= 100){
+    res.json({msg:"Model too long"});
+    return false;
+  }
+
+  console.log("saving data for", model, x, y);
+
+  var guid = (function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+                 .toString(16)
+                 .substring(1);
+    }
+    return function() {
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+             s4() + '-' + s4() + s4() + s4();
+    };
+  })();
+  var key = guid()+":"+model;
+  console.log("Key", key);
+  udb.set(key, {"x":x,"y":y});
+});
+
+app.post('/api/v1/sweetspot', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  if(!req.query.model || !req.query.x || !req.query.y ){
+    console.log("no data");
+    res.json({msg:"Error no model, x or y set"});
+    return false;
+  }
+  var model = req.query.model;
+  var x = req.query.x;
+  var y = req.query.y;
+
+  // Check X and Y are integers
+  var intRegex = /^\d+$/;
+  if(intRegex.test(x) && intRegex.test(y)) {
+    
+  }else{
+    res.json({msg:"Error x or y isn't an integer"});
+    return false;
+  }
+  // Check model is < 100 characters in length
+  if(model.length >= 100){
+    res.json({msg:"Model too long"});
+    return false;
+  }
+
+  console.log("saving data for", model, x, y);
+
+  var guid = (function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+                 .toString(16)
+                 .substring(1);
+    }
+    return function() {
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+             s4() + '-' + s4() + s4() + s4();
+    };
+  })();
+  var key = guid()+":"+model;
+  console.log("Key", key);
+  udb.set(key, {"x":x,"y":y});
+});
+
+app.post('/api/v2/sweetspot', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  if(!req.query.model || !req.query.x || !req.query.y ){
+    console.log("no data");
+    res.json({msg:"Error no model, x or y set"});
+    return false;
+  }
+  var model = req.query.model;
+  var x = req.query.x;
+  var y = req.query.y;
+  var maxX = req.query.maxX; // maximum X pixels on the screen
+  var maxY = req.query.maxY; // maximum Y pixels on the screen
+
+  // Check X and Y are integers
+  var intRegex = /^\d+$/;
+  if(intRegex.test(x) && intRegex.test(y) && intRegex.test(maxX) && intRegex.test(maxY)) {
+    // all is good
+  }else{
+    res.json({msg:"Error x,y,maxx or maxy isn't an integer"});
+    return false;
+  }
+  // Check model is < 100 characters in length
+  if(model.length >= 100){
+    res.json({msg:"Model too long"});
+    return false;
+  }
+
+  console.log("saving data for", model, x, y, maxx, maxy);
+
+  var guid = (function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+    return function() {
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    };
+  })();
+
+  var key = guid()+":"+model;
+  console.log("Key", key);
+  udb.set(key, {"x":x,"y":y,"maxX"+maxX,"maxY"+maxY});
+});
+
 udb.init(function (err){
   if(err)
   {
@@ -124,11 +253,6 @@ udb.init(function (err){
     app.listen(8001);
   }
 });
-
-// save a record
-function saveRecord(model, x, y){
-  udb.set(model, {x:x,y:y});
-}
 
 var arrayUnique = function(a) {
   return a.reduce(function(p, c) {
