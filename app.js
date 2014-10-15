@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser());
 
-app.get('/api/v1/device/list', function(req, res){
+app.get('/api/v2/device/list', function(req, res){
   res.setHeader('Content-Type', 'application/json');
   udb.findKeys("*",null, function(e,data){
     var models = [];
@@ -137,6 +137,7 @@ app.post('/api/v1/sweetspot', function(req, res){
   var key = guid()+":"+model;
   console.log("Key", key);
   udb.set(key, {"x":x,"y":y});
+  res.json({"success":true});
 });
 
 app.post('/api/v2/sweetspot', function(req, res){
@@ -166,7 +167,6 @@ app.post('/api/v2/sweetspot', function(req, res){
     res.json({msg:"Model too long"});
     return false;
   }
-
   console.log("saving data for", model, x, y, maxX, maxY);
 
   var guid = (function() {
@@ -181,6 +181,7 @@ app.post('/api/v2/sweetspot', function(req, res){
   var key = guid()+":"+model;
   console.log("Key", key);
   udb.set(key, {"x":x,"y":y,"maxX":+maxX,"maxY":+maxY});
+  res.json({"success":true});
 });
 
 udb.init(function (err){
