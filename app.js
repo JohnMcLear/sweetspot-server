@@ -7,6 +7,46 @@ var bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser());
 
+app.get('/api/v1/device/list', function(req, res){
+  res.setHeader('Content-Type', 'application/json');
+  udb.findKeys("*",null, function(e,data){
+    var models = [];
+    data.forEach(function(k,er){
+      var model = k.split(":")[1];
+      models.push(model);
+    });
+    var uniqueModels = arrayUnique(models);
+    console.log(uniqueModels);
+    models = uniqueModels.sort();
+    res.json(models);
+  })
+});
+
+app.get('/api/v1/device/search/*', function(req, res){
+  console.log(req.url);
+  var query = req.url.split("/");
+  var model = query[query.length-1];
+  var search = unescape(model);
+  res.setHeader('Content-Type', 'application/json');
+  udb.findKeys("*",null, function(e,data){
+    var models = [];
+    data.forEach(function(k,er){
+      var model = k.split(":")[1];
+      var rM = search.toLowerCase();
+      var model = model.toLowerCase();
+      // console.log("rM", search, "model", model);
+      if(model.indexOf(rM) >= 0){
+        models.push(model);
+      }
+    });
+    var uniqueModels = arrayUnique(models);
+    // console.log(uniqueModels);
+    models = uniqueModels.sort();
+    res.json(models);
+  })
+});
+
+
 app.get('/api/v1/sweetspot', function(req, res){
   res.setHeader('Content-Type', 'application/json');
   if(!req.query.model){
@@ -90,3 +130,10 @@ udb.init(function (err){
 function saveRecord(model, x, y){
   udb.set(model, {x:x,y:y});
 }
+
+var arrayUnique = function(a) {
+  return a.reduce(function(p, c) {
+    if (p.indexOf(c) < 0) p.push(c);
+    return p;
+  }, []);
+};
