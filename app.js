@@ -73,14 +73,14 @@ app.get('/api/v2/sweetspot', function(req, res){
 
 app.post('/api/v1/sweetspot', function(req, res){
   res.setHeader('Content-Type', 'application/json');
-  if(!req.query.model || !req.query.x || !req.query.y ){
+  if(!req.body.model || !req.body.x || !req.body.y ){
     console.log("no data");
     res.json({msg:"Error no model, x or y set"});
     return false;
   }
-  var model = req.query.model;
-  var x = req.query.x;
-  var y = req.query.y;
+  var model = req.body.model;
+  var x = req.body.x;
+  var y = req.body.y;
 
   // Check X and Y are integers
   var intRegex = /^\d+$/;
@@ -116,16 +116,17 @@ app.post('/api/v1/sweetspot', function(req, res){
 
 app.post('/api/v2/sweetspot', function(req, res){
   res.setHeader('Content-Type', 'application/json');
-  if(!req.query.model || !req.query.x || !req.query.y ){
+  console.log(req.body);
+  if(!req.body.model || !req.body.x || !req.body.y ){
     console.log("no data");
     res.json({msg:"Error no model, x or y set"});
     return false;
   }
-  var model = req.query.model;
-  var x = req.query.x;
-  var y = req.query.y;
-  var maxX = req.query.maxX; // maximum X pixels on the screen
-  var maxY = req.query.maxY; // maximum Y pixels on the screen
+  var model = req.body.model;
+  var x = req.body.x;
+  var y = req.body.y;
+  var maxX = req.body.maxX; // maximum X pixels on the screen
+  var maxY = req.body.maxY; // maximum Y pixels on the screen
 
   // Check X and Y are integers
   var intRegex = /^\d+$/;
