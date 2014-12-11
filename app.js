@@ -4,8 +4,16 @@ var express = require('express');
 var cors = require("cors");
 var app = express();
 var bodyParser = require('body-parser');
+var geoip = require('geoip-lite');
+
 app.use(cors());
 app.use(bodyParser());
+
+app.get('/geoip', function(req, res){
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var geo = geoip.lookup(ip);
+  res.json(geo);
+});
 
 app.get('/api/v2/device/list', function(req, res){
   res.setHeader('Content-Type', 'application/json');
